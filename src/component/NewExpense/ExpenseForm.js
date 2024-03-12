@@ -5,6 +5,7 @@ const ExpenseForm = (props) => {
     const [enteredTitle, setEnteredTitle]= useState('');
     const [enteredAmount, setEnteredAmount]= useState('');
     const [enteredDate, setEnteredDate] = useState('');
+    const [enteredLocation, setEnteredLocation] = useState('');
     
     const titleChangeHandler = (event) => {
         setEnteredTitle(event.target.value);
@@ -14,14 +15,18 @@ const ExpenseForm = (props) => {
 }
     const dateChangeHandler = (event) => {
         setEnteredDate(event.target.value);
-}
+  }
+  const locationChangeHandler = (event) => {
+    setEnteredLocation(event.target.value);
+  }
 
     const submitHandler = (event) => {
         event.preventDefault();
         const expenseData = {
             title: enteredTitle,
             amount: enteredAmount,
-            date: new Date(enteredDate)
+          date: new Date(enteredDate),
+          LocationOfExpenditure: enteredLocation  
         }
       props.onSaveExpenseData(expenseData);
       
@@ -29,11 +34,12 @@ const ExpenseForm = (props) => {
       setEnteredTitle("");
       setEnteredAmount("");
       setEnteredDate("");
+      setEnteredLocation("");
 
 }
 
   return (
-   <form onSubmit={submitHandler}>
+    <form onSubmit={submitHandler}>
       <div className="new-expense__controls">
         <div className="new-expense__control">
           <label>Title</label>
@@ -63,9 +69,19 @@ const ExpenseForm = (props) => {
             onChange={dateChangeHandler}
           />
         </div>
+        <div className="new-expense__control">
+          <label>Location</label>
+          <input
+            type="text"
+            value={enteredLocation}
+            onChange={locationChangeHandler}
+          />
+        </div>
       </div>
       <div className="new-expense__actions">
-        <button type="button" onClick={props.onCancel}>Cancel</button>
+        <button type="button" onClick={props.onCancel}>
+          Cancel
+        </button>
         <button type="submit">Add Expense</button>
       </div>
     </form>
