@@ -7,6 +7,7 @@ const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { loginHandler } = useContext(ExpenseContext);
@@ -51,8 +52,7 @@ const Login = () => {
       const data = await response.json();
       //console.log(data)
       loginHandler(data.idToken);
-        navigate("/");
-        
+      navigate("/");
     } catch (error) {
       setError(error.message);
     } finally {
@@ -83,6 +83,18 @@ const Login = () => {
               required
             />
           </div>
+          {!isLogin && (
+            <div className={classes.control}>
+              <label htmlFor="confirm-password">Confirm Password</label>
+              <input
+                type="password"
+                id="confirm-password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
+            </div>
+          )}
           <div className={classes.actions}>
             {!loading && (
               <button>{isLogin ? "Login" : "Create Account"}</button>
@@ -97,10 +109,10 @@ const Login = () => {
             </button>
           </div>
         </form>
-          </section>
-          <div className={classes.error}>
-              {error && <p className="text-danger mt-2">{error}</p>}
-          </div>
+      </section>
+      <div className={classes.error}>
+        {error && <p className="text-danger mt-2">{error}</p>}
+      </div>
     </React.Fragment>
   );
 };

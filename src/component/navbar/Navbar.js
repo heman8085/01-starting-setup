@@ -21,7 +21,7 @@ const Navbar = () => {
         <ul>
           {!userIsLoggedIn && (
             <li>
-              <Link to="/auth">Login</Link>
+              <Link to="/auth">Login/SignUp</Link>
             </li>
           )}
           {userIsLoggedIn && (
