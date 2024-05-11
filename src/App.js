@@ -1,51 +1,24 @@
-import React,{useState} from "react";
-import NewExpense from "./component/NewExpense/NewExpense";
-import Expenses from "./component/Expenses/Expenses";
+import React, { useContext } from "react";
+import Home from "./component/pages/home/Home";
+import Navbar from "./component/navbar/Navbar";
+import {BrowserRouter as Router,Routes,Route } from "react-router-dom";
+import Login from "./component/pages/auth/Login";
+import { ExpenseContext } from "./component/store/ExpenseContext";
+import Profile from "./component/pages/profile/Profile";
 
-const DUMMY_EXPENSES = [
-    {
-      id: "e1",
-      title: "Toilet Paper",
-      amount: 94.12,
-      date: new Date(2024, 7, 14),
-      LocationOfExpenditure: "Grocery store",
-    },
-    {
-      id: "e2",
-      title: "New TV",
-      amount: 799.49,
-      date: new Date(2024, 2, 12),
-      LocationOfExpenditure: "Electronics shop",
-    },
-    {
-      id: "e3",
-      title: "Car Insurance",
-      amount: 294.67,
-      date: new Date(2024, 4, 28),
-      LocationOfExpenditure: "Maruti Suzuki showroom",
-    },
-    {
-      id: "e4",
-      title: "New Desk (Wooden)",
-      amount: 450,
-      date: new Date(2023, 5, 12),
-      LocationOfExpenditure: "Carpenter shop",
-    },
-  ];
+
 const App = () => {
- const [expenses, setExpenses] = useState(DUMMY_EXPENSES)
-
-  const addExpenseHandler = (expense) => {
-    setExpenses((prevExpenses) => {
-      return [expense, ...prevExpenses];
-    })
-  };
+  const { userIsLoggedIn } = useContext(ExpenseContext);
 
   return (
-    <div>
-      <NewExpense onAddExpense={addExpenseHandler } />
-      <Expenses items={expenses} />
-    </div>
+    <Router>
+      <Navbar />
+      <Routes>
+       {userIsLoggedIn && <Route path="/" element={<Home />} />}
+       {userIsLoggedIn && <Route path="/profile" element={<Profile/> } />}
+         {!userIsLoggedIn && <Route path="/auth" element={<Login/>} />}
+      </Routes>
+    </Router>
   );
 };
 
