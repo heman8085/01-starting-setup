@@ -5,19 +5,18 @@ const ExpenseProvider = ({ children }) => {
 const initialToken = localStorage.getItem("token");
 const [token, setToken] = useState(initialToken);
 
-
 const userIsLoggedIn = !!token;
 
 const loginHandler = (newToken) => {
   setToken(newToken);
-  localStorage.setItem("token", newToken);
+  localStorage.setItem("token", JSON.stringify(newToken));
+  };
   
-};
 const logoutHandler = () => {
   setToken(null);
     localStorage.removeItem("token");
-};
-
+  };
+  
     return (
         <ExpenseContext.Provider value={{userIsLoggedIn,loginHandler,logoutHandler}}>
             {children}

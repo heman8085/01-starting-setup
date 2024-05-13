@@ -26,6 +26,7 @@
     margin: 0 1rem;
     color: white;
   }
+
   .expense-item h3 {
     color: #3a3a3a;
     font-size: 1rem;
@@ -34,7 +35,6 @@
     color: white;
   }
 
-  
   .expense-item__price {
     font-size: 1rem;
     font-weight: bold;

@@ -53,5 +53,18 @@
   background-color: #c291e2;
   color: #38015c;
 }
-
+/* Media Queries for Responsive Design */
+@media screen and (max-width: 768px) {
+  .header {
+    padding: 0 5%;
+  }
+  
+  .header li {
+    margin: 0 0.5rem;
+  }
+  
+  .header button {
+    padding: 0.5rem 1rem;
+  }
+}
 
