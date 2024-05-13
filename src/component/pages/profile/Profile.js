@@ -1,38 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext} from "react";
 import classes from "./Profile.module.css";
+import { ExpenseContext } from "../../store/ExpenseContext";
 
 const Profile = () => {
-  const [fullName, setFullName] = useState("");
-  const [profilePhoto, setProfilePhoto] = useState("");
-
-  const handleUpdate = async (e) => {
-    e.preventDefault();
-  let idTokens = JSON.parse(localStorage.getItem("token"));
-      try {
-        const response = await fetch(
-          "https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyAhtkhxPzQ_tsBn9XwbMowkROKCMOYXI54",
-          {
-            method: "POST",
-            body: JSON.stringify({
-              idToken: idTokens,
-              displayName: fullName,
-              photoUrl: profilePhoto,
-              returnSecureToken: true,
-            }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.error.message);
-        }
-        const profileData = await response.json();
-        console.log(profileData);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  
+  const { handleUpdate,setFullName,setProfilePhoto } = useContext(ExpenseContext);
   
   return (
     <section className={classes.profile_card}>
