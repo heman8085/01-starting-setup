@@ -5,19 +5,22 @@ import {BrowserRouter as Router,Routes,Route } from "react-router-dom";
 import Login from "./component/pages/auth/Login";
 import { ExpenseContext } from "./component/store/ExpenseContext";
 import Profile from "./component/pages/profile/Profile";
-
+import './App.css';
 
 const App = () => {
-  const { userIsLoggedIn } = useContext(ExpenseContext);
+  const { userIsLoggedIn,warning} = useContext(ExpenseContext);
 
   return (
     <Router>
       <Navbar />
       <Routes>
-       {userIsLoggedIn && <Route path="/" element={<Home />} />}
-       {userIsLoggedIn && <Route path="/profile" element={<Profile/> } />}
-         {!userIsLoggedIn && <Route path="/auth" element={<Login/>} />}
+        {userIsLoggedIn && <Route path="/" element={<Home />} />}
+        {userIsLoggedIn && <Route path="/profile" element={<Profile />} />}
+        {!userIsLoggedIn && <Route path="/auth" element={<Login />} />}
       </Routes>
+      {warning && (
+        <div className="warning">Your profile is incomplete. Complete it now !!</div>
+      )}
     </Router>
   );
 };

@@ -1,0 +1,12 @@
+.warning{
+    height: 60px;
+    width: 300px;
+    position: absolute;
+    right: 0;
+    top: 10%;
+    background-color:#ff8600;
+    color: white;
+    padding: 5px;
+    border-radius: 10px;
+    font-style: italic;
+}
