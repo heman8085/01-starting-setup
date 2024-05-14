@@ -8,6 +8,7 @@ const ExpenseProvider = ({ children }) => {
   const [fullName, setFullName] = useState("");
   const [profilePhoto, setProfilePhoto] = useState("");
   const [profileUpdated, setProfileUpdated] = useState(false);
+  const [userDetails, setUserDetails] = useState("");
 
   const userIsLoggedIn = !!token;
 
@@ -49,11 +50,11 @@ const loginHandler = (newToken) => {
         if (response.ok) {
           const data = await response.json();
           console.log(data);
-          const { displayName, photoUrl } = data.users[0];
-          // console.log("DisplayName:", displayName);
-          // console.log("PhotoUrl:", photoUrl);
-          setFullName(displayName);
-          setProfilePhoto(photoUrl);
+          setUserDetails(data.users[0]);
+         
+          // setFullName(displayName);
+          // setProfilePhoto(photoUrl);
+          
             
         } else {
           setWarning(true)
@@ -113,7 +114,8 @@ const loginHandler = (newToken) => {
         warning,
         profilePhoto,
         fullName,
-        fetchUserDetails
+        fetchUserDetails,
+        userDetails
       }}
     >
       {children}
