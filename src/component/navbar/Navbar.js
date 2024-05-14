@@ -4,7 +4,7 @@ import classes from "./Navbar.module.css";
 import { ExpenseContext } from "../store/ExpenseContext";
 
 const Navbar = () => {
-  const { userIsLoggedIn, logoutHandler } = useContext(ExpenseContext);
+  const { userIsLoggedIn, logoutHandler,fetchUserDetails,profileUpdated } = useContext(ExpenseContext);
     const navigate = useNavigate();
 
     const handleLogout = () => {
@@ -31,7 +31,12 @@ const Navbar = () => {
           )}
           {userIsLoggedIn && (
             <li>
-              <Link to="/profile">Profile</Link>
+              <Link
+                to="/profile"
+                onClick={fetchUserDetails}
+              >
+                Profile
+              </Link>
             </li>
           )}
           {userIsLoggedIn && (

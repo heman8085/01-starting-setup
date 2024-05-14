@@ -11,6 +11,11 @@ const ExpenseProvider = ({ children }) => {
 
   const userIsLoggedIn = !!token;
 
+const loginHandler = (newToken) => {
+    setToken(newToken);
+    localStorage.setItem("token", JSON.stringify(newToken));
+  };
+
   useEffect(() => {
     if (userIsLoggedIn && !profileUpdated) {
       setWarning(true);
@@ -18,36 +23,63 @@ const ExpenseProvider = ({ children }) => {
         setWarning(false);
       }, 4000);
     }
-  }, [userIsLoggedIn, profileUpdated]);
+  }, [userIsLoggedIn,profileUpdated]);
 
-  const loginHandler = (newToken) => {
-    setToken(newToken);
-    localStorage.setItem("token", JSON.stringify(newToken));
-    // Check if the profile is already updated
-    const storedProfileUpdated = localStorage.getItem("profileUpdated");
-    if (storedProfileUpdated === "true") {
-      setProfileUpdated(true);
-    } else {
-      setProfileUpdated(false);
-    }
-
-  };
-
+  useEffect(() => {
+      setWarning(false)
+     fetchUserDetails();
+  }, []);
+  
+  
+    const fetchUserDetails = async () => {
+      let idToken = JSON.parse(localStorage.getItem("token"));
+      try {
+        const response = await fetch(
+          "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyAhtkhxPzQ_tsBn9XwbMowkROKCMOYXI54",
+          {
+            method: "POST",
+            body: JSON.stringify({
+              idToken: idToken,
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data);
+          const { displayName, photoUrl } = data.users[0];
+          // console.log("DisplayName:", displayName);
+          // console.log("PhotoUrl:", photoUrl);
+          setFullName(displayName);
+          setProfilePhoto(photoUrl);
+            
+        } else {
+          setWarning(true)
+          throw new Error("failed to fetch form data");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
   const logoutHandler = () => {
     setToken(null);
     localStorage.removeItem("token");
+    setWarning(false);
   };
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-    let idTokens = JSON.parse(localStorage.getItem("token"));
+    let idToken = JSON.parse(localStorage.getItem("token"));
     try {
       const response = await fetch(
         "https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyAhtkhxPzQ_tsBn9XwbMowkROKCMOYXI54",
         {
           method: "POST",
           body: JSON.stringify({
-            idToken: idTokens,
+            idToken: idToken,
             displayName: fullName,
             photoUrl: profilePhoto,
             returnSecureToken: true,
@@ -63,15 +95,12 @@ const ExpenseProvider = ({ children }) => {
       }
       const profileData = await response.json();
       console.log(profileData);
-      // Update profileUpdated state and store in localStorage
-      setProfileUpdated(true);
-      localStorage.setItem("profileUpdated", "true");
-
+       setProfileUpdated(true);
     } catch (error) {
       console.log(error);
     }
   };
-  
+
   return (
     <ExpenseContext.Provider
       value={{
@@ -82,6 +111,9 @@ const ExpenseProvider = ({ children }) => {
         setFullName,
         setProfilePhoto,
         warning,
+        profilePhoto,
+        fullName,
+        fetchUserDetails
       }}
     >
       {children}
