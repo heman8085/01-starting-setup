@@ -27,10 +27,13 @@ const loginHandler = (newToken) => {
   }, [userIsLoggedIn,profileUpdated]);
 
   useEffect(() => {
-      setWarning(false)
-     fetchUserDetails();
-  }, []);
-  
+    if (userIsLoggedIn) {
+      fetchUserDetails();
+    } else {
+      setUserDetails("");
+    }
+  }, [userIsLoggedIn]);
+
   
     const fetchUserDetails = async () => {
       let idToken = JSON.parse(localStorage.getItem("token"));
@@ -49,19 +52,15 @@ const loginHandler = (newToken) => {
         );
         if (response.ok) {
           const data = await response.json();
-          console.log(data);
+          console.log("fetchUserDetails response:",data);
           setUserDetails(data.users[0]);
-         
-          // setFullName(displayName);
-          // setProfilePhoto(photoUrl);
-          
             
         } else {
           setWarning(true)
           throw new Error("failed to fetch form data");
         }
       } catch (error) {
-        console.log(error);
+        console.log("Error in fetching profile data:",error);
       }
     };
   
@@ -95,8 +94,12 @@ const loginHandler = (newToken) => {
         throw new Error(errorData.error.message);
       }
       const profileData = await response.json();
-      console.log(profileData);
-       setProfileUpdated(true);
+      console.log("handleUpdate response",profileData);
+      setProfileUpdated(true);
+      fetchUserDetails();
+       setFullName("");
+      setProfilePhoto("");
+      
     } catch (error) {
       console.log(error);
     }
@@ -115,7 +118,8 @@ const loginHandler = (newToken) => {
         profilePhoto,
         fullName,
         fetchUserDetails,
-        userDetails
+        userDetails,
+        profileUpdated
       }}
     >
       {children}

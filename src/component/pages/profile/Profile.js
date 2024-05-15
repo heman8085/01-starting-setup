@@ -6,8 +6,7 @@ import ProfileDisplay from "./ProfileDisplay";
 
 const Profile = () => {
   
-  const { handleUpdate,setFullName,setProfilePhoto } = useContext(ExpenseContext);
-  
+  const { handleUpdate,setFullName,setProfilePhoto} = useContext(ExpenseContext);
   
   return (
     <section className={classes.profile_card}>

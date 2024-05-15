@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import classes from "./Login.module.css";
 import { ExpenseContext } from "../../store/ExpenseContext";
 
@@ -10,7 +10,8 @@ const Login = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const { loginHandler } = useContext(ExpenseContext);
+ 
+  const { loginHandler} = useContext(ExpenseContext);
   const navigate = useNavigate();
 
   const switchModeHandler = () => {
@@ -50,7 +51,7 @@ const Login = () => {
       }
 
       const data = await response.json();
-      //console.log(data)
+      console.log("login post response:",data)
       loginHandler(data.idToken);
       navigate("/");
     } catch (error) {
@@ -59,6 +60,8 @@ const Login = () => {
       setLoading(false);
     }
   };
+
+  
 
   return (
     <React.Fragment>
@@ -99,6 +102,7 @@ const Login = () => {
             {!loading && (
               <button>{isLogin ? "Login" : "Create Account"}</button>
             )}
+            {isLogin && <Link to="/forgetPassword" className={classes.toggle }>forgot password?</Link>}
             {loading && <p>Sending request...</p>}
             <button
               type="button"
@@ -111,7 +115,8 @@ const Login = () => {
         </form>
       </section>
       <div className={classes.error}>
-        {error && <p className="text-danger mt-2">{error}</p>}
+        {error && <p>{error}</p>}
+        
       </div>
     </React.Fragment>
   );

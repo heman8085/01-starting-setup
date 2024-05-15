@@ -22,7 +22,7 @@ const ProfileDisplay = () => {
         }
       );
       const data = await response.json();
-      console.log(data)
+      console.log("verification response:",data)
       setVerificationSent(true);
     } catch (error) {
       console.error("Error sending verification email:", error);
@@ -31,7 +31,7 @@ const ProfileDisplay = () => {
 
   return (
     <div>
-      <img src={userDetails.photoUrl} alt="Profile" />
+      <img src={userDetails.photoUrl} alt="Profile" height={200} width={200}/>
       <h2>{userDetails.displayName}</h2>
       <h3>
         {userDetails.email}

@@ -4,7 +4,7 @@ import classes from "./Navbar.module.css";
 import { ExpenseContext } from "../store/ExpenseContext";
 
 const Navbar = () => {
-  const { userIsLoggedIn, logoutHandler,fetchUserDetails,profileUpdated } = useContext(ExpenseContext);
+  const { userIsLoggedIn, logoutHandler,fetchUserDetails } = useContext(ExpenseContext);
     const navigate = useNavigate();
 
     const handleLogout = () => {
