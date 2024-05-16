@@ -1,18 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import ExpenseDate from "../date/ExpenseDate";
 import Card from "../../UI/Card";
 import "./ExpensesList.css";
+import { DataContext } from "../../store/DataContext";
 
-const ExpenseList = (props) => {
-  if (props.items.length === 0) {
+const ExpenseList = () => {
+  const { expenseList } = useContext(DataContext);
+
+
+  if (expenseList.length === 0) {
     return <h2 className="expenses-list__fallback">Found no expenses.</h2>;
   } else {
     return (
       <ul className="expenses-list">
-        {props.items.map((expense) => (
-          <li key={expense.id}>
+        {expenseList.map((expense, index) => (
+          <li key={index}>
             <Card className="expense-item">
-              <ExpenseDate date={expense.date} />
+              <ExpenseDate date={new Date(expense.date)} />
               <div className="expense-item__description">
                 <h2>{expense.category}</h2>
                 <h3>{expense.title}</h3>
@@ -21,7 +25,7 @@ const ExpenseList = (props) => {
             </Card>
           </li>
         ))}
-        {props.items.length === 1 && (
+        {expenseList.length === 1 && (
           <h2 className="expenses-list__fallback">
             Only single Expense here. Please add more...
           </h2>
