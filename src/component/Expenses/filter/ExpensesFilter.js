@@ -5,10 +5,6 @@ import { DataContext } from "../../store/DataContext";
 const ExpensesFilter = () => {
   const { filteredYear, filterChangeHandler } = useContext(DataContext);
 
-  // const dropdownChangeHandler = (event) => {
-  //   filterChangeHandler(event.target.value);
-  // };
-
   return (
     <div className="expenses-filter">
       <div className="expenses-filter__control">

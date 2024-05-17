@@ -1,5 +1,4 @@
 import { createContext, useEffect, useState } from "react";
-
 const DataContext = createContext();
 
 const DataProvider = ({ children }) => {
@@ -14,9 +13,11 @@ const DataProvider = ({ children }) => {
         );
         if (response.ok) {
           const data = await response.json();
-          console.log(data);
-          const expenseData = data ? Object.values(data) : [];
+          const expenseData = data
+            ? Object.keys(data).map((key) => ({ ...data[key], key }))
+            : [];
           setExpenseList(expenseData);
+          console.log("fetched expense data",expenseData);
         } else {
           throw new Error("failed to fetch form data");
         }
@@ -35,6 +36,12 @@ const DataProvider = ({ children }) => {
     return expenseDate.getFullYear().toString() === filteredYear;
   });
 
+const removeExpense = (id) => {
+  setExpenseList((prevList) =>
+    prevList.filter((expense) => expense.key !== id)
+  );
+};
+
   return (
     <DataContext.Provider
       value={{
@@ -43,6 +50,7 @@ const DataProvider = ({ children }) => {
         filteredExpenses,
         filteredYear,
         filterChangeHandler,
+        removeExpense
       }}
     >
       {children}
