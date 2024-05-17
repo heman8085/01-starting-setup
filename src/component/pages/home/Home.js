@@ -4,17 +4,6 @@ import Expenses from "../../Expenses/main/Expenses";
 import { DataProvider } from "../../store/DataContext";
 
 const Home = () => {
-  // const [expenses, setExpenses] = useState([]);
-
-  // const addExpenseHandler = (expense) => {
-  //   const expenseWithDateObject = {
-  //     ...expense,
-  //     date: new Date(expense.date),
-  //   };
-  //   setExpenses((prevExpenses) => {
-  //     return [expenseWithDateObject, ...prevExpenses];
-  //   });
-  // };
   
   return (
     <DataProvider>

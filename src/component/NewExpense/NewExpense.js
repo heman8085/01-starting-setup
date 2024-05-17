@@ -50,7 +50,6 @@ const NewExpense = () => {
       setEnteredCategory("");
       setIsEditing(false);
 
-      // props.onAddExpense(expenseData);
     } catch (error) {
       console.error("Error adding expense:", error);
     }
