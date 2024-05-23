@@ -9,7 +9,10 @@ import './App.css';
 import ForgetPassword from "./component/pages/auth/ForgetPassword";
 
 const App = () => {
-  const { userIsLoggedIn,warning} = useContext(ExpenseContext);
+  
+   const { state } = useContext(ExpenseContext);
+   const userIsLoggedIn = !!state.token;
+   const { warning } = state;
 
   return (
     <Router>

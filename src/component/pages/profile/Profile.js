@@ -1,13 +1,24 @@
-import React, { useContext} from "react";
+import React, { useContext, useState } from "react";
 import classes from "./Profile.module.css";
 import { ExpenseContext } from "../../store/ExpenseContext";
 import ProfileDisplay from "./ProfileDisplay";
 
-
 const Profile = () => {
+  const { handleUpdate, dispatch } = useContext(ExpenseContext);
+  const [fullName, setFullName] = useState("");
+  const [profilePhoto, setProfilePhoto] = useState("");
   
-  const { handleUpdate,setFullName,setProfilePhoto} = useContext(ExpenseContext);
-  
+
+  const handleFullNameChange = (e) => {
+    setFullName(e.target.value);
+    dispatch({ type: "SET_FULL_NAME", payload: e.target.value });
+  };
+
+  const handleProfilePhotoChange = (e) => {
+    setProfilePhoto(e.target.value);
+    dispatch({ type: "SET_PROFILE_PHOTO", payload: e.target.value });
+  };
+
   return (
     <section className={classes.profile_card}>
       <div className={classes.profile_display}>
@@ -20,7 +31,8 @@ const Profile = () => {
             <input
               type="text"
               id="name"
-              onChange={(e) => setFullName(e.target.value)}
+              value={fullName}
+              onChange={handleFullNameChange}
               required
             />
           </div>
@@ -29,7 +41,8 @@ const Profile = () => {
             <input
               type="text"
               id="photo"
-              onChange={(e) => setProfilePhoto(e.target.value)}
+              value={profilePhoto}
+              onChange={handleProfilePhotoChange}
             />
           </div>
           <div className={classes.actions}>

@@ -3,14 +3,15 @@ import { Link, useNavigate } from "react-router-dom";
 import classes from "./Navbar.module.css";
 import { ExpenseContext } from "../store/ExpenseContext";
 
-const Navbar = () => {
-  const { userIsLoggedIn, logoutHandler,fetchUserDetails } = useContext(ExpenseContext);
-    const navigate = useNavigate();
 
-    const handleLogout = () => {
-      logoutHandler();
-      navigate("/auth");
-    };
+const Navbar = () => {
+  const { state, logoutHandler, fetchUserDetails } = useContext(ExpenseContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logoutHandler();
+    navigate("/auth");
+  };
 
   return (
     <header className={classes.header}>
@@ -19,27 +20,25 @@ const Navbar = () => {
       </Link>
       <nav>
         <ul>
-          {!userIsLoggedIn && (
+          {!state.isLoggedIn && (
             <li>
               <Link to="/auth">Login/SignUp</Link>
             </li>
           )}
-          {userIsLoggedIn && (
+          {state.isLoggedIn && (
             <li>
               <Link to="/">Home</Link>
             </li>
           )}
-          {userIsLoggedIn && (
+          {state.isLoggedIn && (
             <li>
-              <Link
-                to="/profile"
-                onClick={fetchUserDetails}
-              >
+              <Link to="/profile" onClick={fetchUserDetails}>
                 Profile
               </Link>
             </li>
           )}
-          {userIsLoggedIn && (
+          
+          {state.isLoggedIn && (
             <li>
               <button onClick={handleLogout}>Logout</button>
             </li>

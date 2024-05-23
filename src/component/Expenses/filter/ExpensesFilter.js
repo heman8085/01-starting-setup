@@ -3,7 +3,9 @@ import "./ExpensesFilter.css";
 import { DataContext } from "../../store/DataContext";
 
 const ExpensesFilter = () => {
-  const { filteredYear, filterChangeHandler } = useContext(DataContext);
+
+   const { state, filterChangeHandler } = useContext(DataContext);
+   const { filteredYear } = state;
 
   return (
     <div className="expenses-filter">

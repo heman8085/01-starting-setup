@@ -9,50 +9,26 @@ const NewExpense = () => {
   const [enteredDate, setEnteredDate] = useState("");
   const [enteredCategory, setEnteredCategory] = useState("");
 
-  const { setExpenseList } = useContext(DataContext);
+  const { addExpense, state } = useContext(DataContext);
 
   const saveExpenseDataHandler = async (event) => {
     event.preventDefault();
 
     const expenseData = {
       title: enteredTitle,
-      amount: enteredAmount,
+      amount: parseFloat(enteredAmount),
       date: new Date(enteredDate).toISOString(),
       category: enteredCategory,
     };
 
-    try {
-      const response = await fetch(
-        "https://add-expense-2e2e8-default-rtdb.firebaseio.com/expenses.json",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(expenseData),
-        }
-      );
-      if (!response.ok) {
-        throw new Error("Failed to add expense.");
-      }
-      const newDataKey = await response.json();
-      const newData = {
-        key: newDataKey,
-        ...expenseData,
-      };
-      setExpenseList((prevList) => [...prevList, newData]);
-      console.log("Expense added successfully:", newData);
+    await addExpense(expenseData);
 
-      // Clear the input fields
-      setEnteredTitle("");
-      setEnteredAmount("");
-      setEnteredDate("");
-      setEnteredCategory("");
-      setIsEditing(false);
-
-    } catch (error) {
-      console.error("Error adding expense:", error);
-    }
+    // Clear the input fields
+    setEnteredTitle("");
+    setEnteredAmount("");
+    setEnteredDate("");
+    setEnteredCategory("");
+    setIsEditing(false);
   };
 
   const startEditingHandler = () => {
@@ -65,9 +41,12 @@ const NewExpense = () => {
   return (
     <div className="new-expense">
       {!isEditing && (
-        <button type="submit" onClick={startEditingHandler}>
+        <button type="button" onClick={startEditingHandler}>
           Add New Expense
         </button>
+      )}
+      {state.isPremium && (
+        <button className="premium-button">Activate Premium</button>
       )}
       {isEditing && (
         <form onSubmit={saveExpenseDataHandler}>

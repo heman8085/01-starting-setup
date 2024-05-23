@@ -23,6 +23,12 @@ const Login = () => {
     setLoading(true);
     setError(null);
 
+     if (!isLogin && enteredPassword !== confirmPassword) {
+       setError("Passwords do not match!");
+       setLoading(false);
+       return;
+     }
+
     let url;
     if (isLogin) {
       url =
@@ -52,7 +58,7 @@ const Login = () => {
 
       const data = await response.json();
       console.log("login post response:",data)
-      loginHandler(data.idToken);
+      loginHandler(data.idToken, data.localId);
       navigate("/");
     } catch (error) {
       setError(error.message);

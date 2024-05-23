@@ -5,7 +5,7 @@ import "./ExpensesList.css";
 import { DataContext } from "../../store/DataContext";
 
 const ExpenseList = () => {
-  const { filteredExpenses, removeExpense, setExpenseList } =
+  const { filteredExpenses, removeExpense, editExpense } =
     useContext(DataContext);
 
   const [editingExpense, setEditingExpense] = useState(null);
@@ -54,32 +54,8 @@ const ExpenseList = () => {
       category: editedCategory,
     };
 
-    try {
-      const response = await fetch(
-        `https://add-expense-2e2e8-default-rtdb.firebaseio.com/expenses/${editingExpense.key}.json`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedExpense),
-        }
-      );
-      if (!response.ok) {
-        throw new Error("Failed to update expense.");
-      }
-      setExpenseList((prevList) =>
-        prevList.map((expense) =>
-          expense.key === editingExpense.key
-            ? { ...expense, ...updatedExpense }
-            : expense
-        )
-      );
-      console.log("Expense data updated successfully:", updatedExpense);
-      stopEditingHandler();
-    } catch (error) {
-      console.error("Error updating expense:", error);
-    }
+    await editExpense(updatedExpense, editingExpense.key);
+    stopEditingHandler();
   };
 
   if (filteredExpenses.length === 0) {
