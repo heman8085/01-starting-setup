@@ -2,14 +2,16 @@ import React, { useContext, useState } from "react";
 import "./NewExpense.css";
 import { DataContext } from "../store/DataContext";
 
+
 const NewExpense = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [enteredTitle, setEnteredTitle] = useState("");
   const [enteredAmount, setEnteredAmount] = useState("");
   const [enteredDate, setEnteredDate] = useState("");
   const [enteredCategory, setEnteredCategory] = useState("");
+  
 
-  const { addExpense, state } = useContext(DataContext);
+  const { addExpense} = useContext(DataContext);
 
   const saveExpenseDataHandler = async (event) => {
     event.preventDefault();
@@ -37,16 +39,13 @@ const NewExpense = () => {
   const stopEditingHandler = () => {
     setIsEditing(false);
   };
-
+ 
   return (
     <div className="new-expense">
       {!isEditing && (
         <button type="button" onClick={startEditingHandler}>
           Add New Expense
         </button>
-      )}
-      {state.isPremium && (
-        <button className="premium-button">Activate Premium</button>
       )}
       {isEditing && (
         <form onSubmit={saveExpenseDataHandler}>

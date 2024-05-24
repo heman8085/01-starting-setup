@@ -4,8 +4,8 @@ import { DataContext } from "../../store/DataContext";
 
 const ExpensesFilter = () => {
 
-   const { state, filterChangeHandler } = useContext(DataContext);
-   const { filteredYear } = state;
+   const { state2, filterChangeHandler } = useContext(DataContext);
+   const { filteredYear } = state2;
 
   return (
     <div className="expenses-filter">

@@ -13,44 +13,44 @@ const calculateIsPremium = (expenses) => {
   return totalAmount > 10000;
 };
 
-export const expenseReducer = (state, action) => {
+export const expenseReducer = (state2, action) => {
   switch (action.type) {
     case "SET_EXPENSE_LIST":
       return {
-        ...state,
+        ...state2,
         expenseList: action.payload,
         isPremium: calculateIsPremium(action.payload),
       };
     case "SET_FILTERED_YEAR":
-      return { ...state, filteredYear: action.payload };
+      return { ...state2, filteredYear: action.payload };
     case "REMOVE_EXPENSE":
-      const updatedExpenseList = state.expenseList.filter(
+      const updatedExpenseList = state2.expenseList.filter(
         (expense) => expense.key !== action.payload
       );
       return {
-        ...state,
+        ...state2,
         expenseList: updatedExpenseList,
         isPremium: calculateIsPremium(updatedExpenseList),
       };
     case "ADD_EXPENSE":
-      const newExpenseList = [...state.expenseList, action.payload];
+      const newExpenseList = [...state2.expenseList, action.payload];
       return {
-        ...state,
+        ...state2,
         expenseList: newExpenseList,
         isPremium: calculateIsPremium(newExpenseList),
       };
     case "EDIT_EXPENSE":
-      const editedExpenseList = state.expenseList.map((expense) =>
+      const editedExpenseList = state2.expenseList.map((expense) =>
         expense.key === action.payload.key
           ? { ...expense, ...action.payload }
           : expense
       );
       return {
-        ...state,
+        ...state2,
         expenseList: editedExpenseList,
         isPremium: calculateIsPremium(editedExpenseList),
       };
     default:
-      return state;
+      return state2;
   }
 };

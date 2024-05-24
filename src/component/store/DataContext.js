@@ -4,7 +4,7 @@ import { expenseReducer, initialExpenseState } from "./expenseReducer";
 const DataContext = createContext();
 
 const DataProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(expenseReducer, initialExpenseState);
+  const [state2, dispatch] = useReducer(expenseReducer, initialExpenseState);
 
   useEffect(() => {
     const fetchExpenseData = async () => {
@@ -36,9 +36,9 @@ const DataProvider = ({ children }) => {
     dispatch({ type: "REMOVE_EXPENSE", payload: id });
   };
 
-  const filteredExpenses = state.expenseList.filter((expense) => {
+  const filteredExpenses = state2.expenseList.filter((expense) => {
     const expenseDate = new Date(expense.date);
-    return expenseDate.getFullYear().toString() === state.filteredYear;
+    return expenseDate.getFullYear().toString() === state2.filteredYear;
   });
 
  const addExpense = async (expenseData) => {
@@ -86,7 +86,7 @@ const DataProvider = ({ children }) => {
   return (
     <DataContext.Provider
       value={{
-        state,
+        state2,
         dispatch,
         filteredExpenses,
         filterChangeHandler,

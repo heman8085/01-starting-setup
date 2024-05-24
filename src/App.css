@@ -1,12 +1,93 @@
-.warning{
-    height: 60px;
-    width: 300px;
-    position: absolute;
-    right: 0;
-    top: 10%;
-    background-color:#ff8600;
-    color: white;
-    padding: 5px;
-    border-radius: 10px;
-    font-style: italic;
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+body {
+  padding: 0;
+  background-color: var(--light-bg);
+  color: var(--light-text);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.warning {
+  height: 60px;
+  width: 300px;
+  position: absolute;
+  right: 0;
+  top: 10%;
+  background-color: #ff8600;
+  color: white;
+  padding: 5px;
+  border-radius: 10px;
+  font-style: italic;
+}
+
+/* premium features */
+:root {
+  --light-bg: #ffffff;
+  --light-text: #000000;
+  --dark-bg: #333333;
+  --dark-text: #ffffff;
+}
+
+body.light {
+  background-color: var(--light-bg);
+  color: var(--light-text);
+}
+
+body.dark {
+  background-color: var(--dark-bg);
+  /* color: var(--dark-text); */
+}
+
+.app {
+  min-height: 100vh;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.app.light {
+  background-color: var(--light-bg);
+  color: var(--light-text);
+}
+
+.app.dark {
+  background-color: var(--dark-bg);
+  /* color: var(--dark-text); */
+}
+
+.toggle-button {
+  padding: 10px 20px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.toggle-button.light {
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
+}
+
+.toggle-button.dark {
+  background-color: var(--light-bg);
+  color: var(--light-text);
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+  .premium-features {
+    padding: 1rem;
+  }
+
+  .toggle-button,
+  button {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+  }
 }
