@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import "./Chart.css";
-import { DataContext } from "../../store/DataContext";
+import { DataContext } from "../../store/data/DataContext";
 
 const Chart = () => {
   const { filteredExpenses } = useContext(DataContext);

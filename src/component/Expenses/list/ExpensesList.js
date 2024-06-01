@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import ExpenseDate from "../date/ExpenseDate";
 import Card from "../../UI/Card";
 import "./ExpensesList.css";
-import { DataContext } from "../../store/DataContext";
+import { DataContext } from "../../store/data/DataContext";
 
 const ExpenseList = () => {
   const { filteredExpenses, removeExpense, editExpense } =

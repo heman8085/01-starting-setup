@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import "./PremiumFeatures.css";
 import { ThemeContext } from "../../store/ThemeContext";
-import { DataContext } from "../../store/DataContext";
+import { DataContext } from "../../store/data/DataContext";
 
 const PremiumFeatures = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);

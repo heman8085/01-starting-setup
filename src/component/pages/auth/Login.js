@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import classes from "./Login.module.css";
-import { ExpenseContext } from "../../store/ExpenseContext";
+import { ExpenseContext } from "../../store/auth/ExpenseContext";
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -10,8 +10,8 @@ const Login = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
- 
-  const { loginHandler} = useContext(ExpenseContext);
+
+  const { loginHandler } = useContext(ExpenseContext);
   const navigate = useNavigate();
 
   const switchModeHandler = () => {
@@ -23,11 +23,11 @@ const Login = () => {
     setLoading(true);
     setError(null);
 
-     if (!isLogin && enteredPassword !== confirmPassword) {
-       setError("Passwords do not match!");
-       setLoading(false);
-       return;
-     }
+    if (!isLogin && enteredPassword !== confirmPassword) {
+      setError("Passwords do not match!");
+      setLoading(false);
+      return;
+    }
 
     let url;
     if (isLogin) {
@@ -57,7 +57,7 @@ const Login = () => {
       }
 
       const data = await response.json();
-      console.log("login post response:",data)
+      console.log("login post response:", data);
       loginHandler(data.idToken, data.localId);
       navigate("/");
     } catch (error) {
@@ -66,7 +66,6 @@ const Login = () => {
       setLoading(false);
     }
   };
-
 
   return (
     <React.Fragment>
@@ -107,7 +106,11 @@ const Login = () => {
             {!loading && (
               <button>{isLogin ? "Login" : "Create Account"}</button>
             )}
-            {isLogin && <Link to="/forgetPassword" className={classes.toggle }>forgot password?</Link>}
+            {isLogin && (
+              <Link to="/forgetPassword" className={classes.toggle}>
+                forgot password?
+              </Link>
+            )}
             {loading && <p>Sending request...</p>}
             <button
               type="button"
@@ -119,10 +122,7 @@ const Login = () => {
           </div>
         </form>
       </section>
-      <div className={classes.error}>
-        {error && <p>{error}</p>}
-        
-      </div>
+      <div className={classes.error}>{error && <p>{error}</p>}</div>
     </React.Fragment>
   );
 };

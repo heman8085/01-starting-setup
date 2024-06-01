@@ -1,11 +1,10 @@
 import React, { useContext } from "react";
 import "./ExpensesFilter.css";
-import { DataContext } from "../../store/DataContext";
+import { DataContext } from "../../store/data/DataContext";
 
 const ExpensesFilter = () => {
-
-   const { state2, filterChangeHandler } = useContext(DataContext);
-   const { filteredYear } = state2;
+  const { state2, filterChangeHandler } = useContext(DataContext);
+  const { filteredYear } = state2;
 
   return (
     <div className="expenses-filter">

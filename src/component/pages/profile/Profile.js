@@ -1,13 +1,12 @@
 import React, { useContext, useState } from "react";
 import classes from "./Profile.module.css";
-import { ExpenseContext } from "../../store/ExpenseContext";
+import { ExpenseContext } from "../../store/auth/ExpenseContext";
 import ProfileDisplay from "./ProfileDisplay";
 
 const Profile = () => {
   const { handleUpdate, dispatch } = useContext(ExpenseContext);
   const [fullName, setFullName] = useState("");
   const [profilePhoto, setProfilePhoto] = useState("");
-  
 
   const handleFullNameChange = (e) => {
     setFullName(e.target.value);

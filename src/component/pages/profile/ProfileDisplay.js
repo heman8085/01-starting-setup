@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { ExpenseContext } from "../../store/ExpenseContext";
+import { ExpenseContext } from "../../store/auth/ExpenseContext";
 
 const ProfileDisplay = () => {
   const { state, sendVerificationEmail } = useContext(ExpenseContext);

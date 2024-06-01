@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import "./NewExpense.css";
-import { DataContext } from "../store/DataContext";
-
+import { DataContext } from "../store/data/DataContext";
 
 const NewExpense = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -9,9 +8,8 @@ const NewExpense = () => {
   const [enteredAmount, setEnteredAmount] = useState("");
   const [enteredDate, setEnteredDate] = useState("");
   const [enteredCategory, setEnteredCategory] = useState("");
-  
 
-  const { addExpense} = useContext(DataContext);
+  const { addExpense } = useContext(DataContext);
 
   const saveExpenseDataHandler = async (event) => {
     event.preventDefault();
@@ -39,7 +37,7 @@ const NewExpense = () => {
   const stopEditingHandler = () => {
     setIsEditing(false);
   };
- 
+
   return (
     <div className="new-expense">
       {!isEditing && (
@@ -51,18 +49,20 @@ const NewExpense = () => {
         <form onSubmit={saveExpenseDataHandler}>
           <div className="new-expense__controls">
             <div className="new-expense__control">
-              <label>Description of expense</label>
+              <label htmlFor="text">Description of expense</label>
               <input
                 type="text"
+                id="text"
                 value={enteredTitle}
                 onChange={(e) => setEnteredTitle(e.target.value)}
                 required
               />
             </div>
             <div className="new-expense__control">
-              <label>Amount Spent</label>
+              <label htmlFor="num">Amount Spent</label>
               <input
                 type="number"
+                id="num"
                 min="0.01"
                 step="0.01"
                 value={enteredAmount}
@@ -71,9 +71,10 @@ const NewExpense = () => {
               />
             </div>
             <div className="new-expense__control">
-              <label>Date</label>
+              <label htmlFor="date">Date</label>
               <input
                 type="date"
+                id="date"
                 min="2020-01-01"
                 max="2024-12-31"
                 value={enteredDate}
